@@ -70,9 +70,18 @@ object Application {
             } ~
             (path("delete") & post) {
               parameter('email) { email =>
-                onSuccess(userActor ? DeleteOne(email)){
-                  case s:String => complete(StatusCodes.OK, s)
+                onSuccess(userActor ? DeleteOne(email)) {
+                  case s: String => complete(StatusCodes.OK, s)
                 }
+              }
+            } ~
+            (path("get") & get) {
+              parameter('email) { email =>
+                onSuccess(userActor ? GetUser(email)) {
+                  case user: User => complete(StatusCodes.OK, user)
+                  case s: String => complete(StatusCodes.BadRequest, s)
+                }
+
               }
             }
         }

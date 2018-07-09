@@ -3,7 +3,7 @@ package com.amitbansal7
 import org.mongodb.scala.model.Filters._
 
 import scala.concurrent.duration._
-import scala.concurrent.{ Await, Future }
+import scala.concurrent.{Await, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object userMongoRepository {
@@ -21,8 +21,8 @@ object userMongoRepository {
   def insertUser(user: User) =
     Await.result(userCollection.insertOne(user).toFuture(), 1 seconds)
 
-  def getOneById(id: String) =
-    userCollection.find(equal("_id", id)).first().collect()
+  def getOneByEmail(email: String) =
+    Await.result(userCollection.find(equal("email", email)).first().toFuture(), 1 seconds)
 
   def getAll() =
     userCollection.find().collect()

@@ -51,5 +51,14 @@ class UserActor extends Actor with ActorLogging {
     case DeleteOne(email) =>
       userMongoRepository.deleteOneByEmail(email)
       sender() ! "User is deleted."
+
+    case GetUser(email) =>
+      val user = userMongoRepository.getByEmail(email)
+      if(user !=  null){
+        sender() ! user
+      }else{
+        sender() ! "User not found"
+      }
+
   }
 }

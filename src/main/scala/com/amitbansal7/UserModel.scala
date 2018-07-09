@@ -42,7 +42,7 @@ case class User(
 
 }
 
-case class GetUser(id: String)
+case class GetUser(email: String)
 
 case object GetAllUsers
 
